@@ -6,22 +6,47 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Vidly.Models;
+using Vidly.ViewModel;
 using String = System.String;
 
 namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
+
+        public ActionResult Index()
+        {
+            var movies = GetMovies();
+
+            return View(movies);
+        }
+
         // GET: Movies/Random
         public ActionResult Random()
         {
-            var movies = new Movie() { Name = "Shrek!" };
+            var movie = new Movie() { Name = "Shrek!" };
+            var customers = new List<Customer>()
+            {
+                new Customer(){ Name = "Customer 1"},
+                new Customer(){ Name = "Customer 2"}
+            };
 
-            //return View(movies);
+            var viewModel = new RandomMovieViewModel()
+            {
+                Movie = movie,
+                Customers = customers
+            };
+
+            //"Bad" method
+            //ViewData["Movie"] = movies;
+            // ViewBag.Movie = movies;
+
+
+            return View(viewModel);
             //return Content("Hello World");
             //return HttpNotFound();
             //return new EmptyResult();
-            return RedirectToAction("Index", "Home", new { page = 1, sortby = "name" });
+            // return RedirectToAction("Index", "Home", new { page = 1, sortby = "name" });
         }
 
         public ActionResult Edit(int id)
@@ -31,16 +56,7 @@ namespace Vidly.Controllers
 
 
         //movies
-        public ActionResult Index(int? pageIndex, string sortBy)
-        {
-            if (!pageIndex.HasValue)
-                pageIndex = 1;
-
-            if (String.IsNullOrWhiteSpace(sortBy))
-                sortBy = "Name";
-
-            return Content($"pageIndex={pageIndex}&sortBy={sortBy}");
-        }
+        
 
         /// mvcaction4  action snipper
         
@@ -48,6 +64,17 @@ namespace Vidly.Controllers
         public ActionResult ByReleaseDate(int year, int month)
         {
             return Content(year + "/" + month);
+        }
+
+        private IEnumerable<Movie> GetMovies()
+        {
+            var movies = new List<Movie>()
+            {
+                new Movie(){ Name = "Shrek"},
+                new Movie(){ Name = "Wall-e"}
+            };
+
+            return movies;
         }
     }
 }
