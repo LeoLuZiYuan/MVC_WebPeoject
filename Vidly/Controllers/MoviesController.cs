@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Web;
@@ -13,12 +14,35 @@ namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
+        private ApplicationDbContext _context;
+
+        public MoviesController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
 
         public ActionResult Index()
         {
-            var movies = GetMovies();
+            var movies = _context.Movies.ToList();
 
             return View(movies);
+        }
+
+        public ActionResult Detail(int id)
+        {
+            var movie = _context.Movies.Include(e => e.Genre).SingleOrDefault(c => c.Id == id);
+
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(movie);
         }
 
         // GET: Movies/Random
@@ -56,11 +80,11 @@ namespace Vidly.Controllers
 
 
         //movies
-        
+
 
         /// mvcaction4  action snipper
-        
-         [Route("movies/released/{year}/{month:regex(\\d{2}):range(1, 12)}")]
+
+        [Route("movies/released/{year}/{month:regex(\\d{2}):range(1, 12)}")]
         public ActionResult ByReleaseDate(int year, int month)
         {
             return Content(year + "/" + month);
