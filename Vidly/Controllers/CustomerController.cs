@@ -26,7 +26,58 @@ namespace Vidly.Controllers
         public ActionResult New()
         {
             var membershipType = _context.MembershipTypes.ToList();
-            return View(membershipType);
+            var viewModel = new CustomerFormViewModel()
+            {
+                Customer = new Customer(),
+                MembershipTypes = membershipType
+            };
+            return View("CustomerForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(Customer customer)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new CustomerFormViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+                return View("CustomerForm", viewModel);
+            }
+
+            if (customer.Id == 0)
+            {
+                _context.Customers.Add(customer);
+            }
+            else
+            {
+                var customerInDb = _context.Customers.Single(v => v.Id == customer.Id);
+                customerInDb.Name = customer.Name;
+                customerInDb.Birthday = customer.Birthday;
+                customerInDb.MembershipTypesId = customer.MembershipTypesId;
+                customerInDb.IsSubscribedToNewLetter = customer.IsSubscribedToNewLetter;
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Customer");
+        }
+
+
+        public ActionResult Edit(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(v => v.Id == id);
+
+            if (customer == null)
+                return HttpNotFound();
+
+            var viewModel = new CustomerFormViewModel
+            {
+                Customer = customer,
+                MembershipTypes = _context.MembershipTypes.ToList()
+            };
+            return View("CustomerForm", viewModel);
         }
 
         // GET: Customer
@@ -48,6 +99,7 @@ namespace Vidly.Controllers
 
             return View(customer);
         }
+
 
     }
 }

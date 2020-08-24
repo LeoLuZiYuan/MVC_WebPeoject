@@ -251,6 +251,10 @@
     <Compile Include="Migrations\202008190753020_PopulateGenre.Designer.cs">
       <DependentUpon>202008190753020_PopulateGenre.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008240809398_addRequreAnnotationtoNameOfMovieModel.cs" />
+    <Compile Include="Migrations\202008240809398_addRequreAnnotationtoNameOfMovieModel.Designer.cs">
+      <DependentUpon>202008240809398_addRequreAnnotationtoNameOfMovieModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -258,10 +262,12 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MembershipTypes.cs" />
+    <Compile Include="Models\Min18YearIfAMember.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModel\NewCustomerViewModel.cs" />
+    <Compile Include="ViewModel\CustomerFormViewModel.cs" />
+    <Compile Include="ViewModel\MovieFormViewModel.cs" />
     <Compile Include="ViewModel\RandomMovieViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -332,7 +338,8 @@
     <Content Include="Views\Customer\Detail.cshtml" />
     <Content Include="Views\Movies\Index.cshtml" />
     <Content Include="Views\Movies\Detail.cshtml" />
-    <Content Include="Views\Customer\New.cshtml" />
+    <Content Include="Views\Customer\CustomerForm.cshtml" />
+    <Content Include="Views\Movies\MovieForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -381,6 +388,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202008190753020_PopulateGenre.resx">
       <DependentUpon>202008190753020_PopulateGenre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008240809398_addRequreAnnotationtoNameOfMovieModel.resx">
+      <DependentUpon>202008240809398_addRequreAnnotationtoNameOfMovieModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
