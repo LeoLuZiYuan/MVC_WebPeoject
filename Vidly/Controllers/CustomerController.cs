@@ -83,9 +83,12 @@ namespace Vidly.Controllers
         // GET: Customer
         public ActionResult Index()
         {
-            var customers = _context.Customers.Include(c => c.MembershipTypes).ToList();
+            // var customers = _context.Customers.Include(c => c.MembershipTypes).ToList();
+            //
+            // return View(customers);
 
-            return View(customers);
+            //Get from API
+            return View();
         }
 
         [Route("customer/detail/{id}")]

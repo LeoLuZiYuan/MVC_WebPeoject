@@ -9,6 +9,7 @@ using AutoMapper;
 using Microsoft.Owin.Security;
 using Vidly.Dtos;
 using Vidly.Models;
+using System.Data.Entity;
 
 namespace Vidly.Controllers.Api
 {
@@ -24,7 +25,10 @@ namespace Vidly.Controllers.Api
         // Get /api/customer
         public IHttpActionResult GetCustomers()
         {
-            var customerDto = _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            var customerDto = _context.Customers
+                .Include(c => c.MembershipTypes)
+                .ToList()
+                .Select(Mapper.Map<Customer, CustomerDto>);
 
             return Ok(customerDto);
         }
