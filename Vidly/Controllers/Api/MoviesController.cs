@@ -20,6 +20,7 @@ namespace Vidly.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
+
         //Get /api/movies
         public IHttpActionResult GetMovies()
         {
