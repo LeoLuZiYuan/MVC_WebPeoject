@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -58,9 +59,9 @@ namespace Vidly
 
 
             var options = new FacebookAuthenticationOptions
-            {
-                AppId = "236336994348807",
-                AppSecret = "98c86f9feb108fb4ddab23fc1211c39c",
+            { 
+                AppId = ConfigurationManager.AppSettings["FacebookAppId"],
+                AppSecret = ConfigurationManager.AppSettings["FacebookAppSecret"],
                 CallbackPath = new PathString("/Account/ExternalLoginCallback/"),
                 Provider = new FacebookAuthenticationProvider
                 {
